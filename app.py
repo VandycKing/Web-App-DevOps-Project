@@ -101,7 +101,6 @@ def add_order():
         product_quantity=product_quantity,
         order_date=order_date,
         shipping_date=shipping_date
-        delivery_date = delivery_date
     )
 
     # Add the new order to the session and commit to the database
