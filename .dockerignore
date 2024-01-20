@@ -1,20 +1,7 @@
-__pycache__
-*.pyc
-*.pyo
-*.pyd
-node_modules
 .git
 .dockerignore
 Dockerfile
 LICENSE
 README.md
-*.log
-*.pot
-*.mo
-*.po
-*.pot
-*.py
-*.md
-*.yml
-*.yaml
+
 
