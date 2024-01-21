@@ -38,8 +38,16 @@ For the application to succesfully run, you need to install the following packag
 - werkzeug (version 2.2.3)
 
 ### Usage
+To run the application, you first need to containerize it. You can do this by using the following command to build an image of the app:
 
-To run the application, you simply need to run the `app.py` script in this repository. Once the application starts you should be able to access it locally at `http://127.0.0.1:5000`. Here you will be meet with the following two pages:
+```bash
+docker build -t <name-of-the-image> .
+```
+This command creates a Docker image with the specified name (<name-of-the-image>) using the current directory as the build context. Once the image is built, you can run the app in a container with the following command:
+```bash
+docker run -p 5000:5000 <name of the image>
+``` 
+This command starts a Docker container based on the previously built image, mapping port 5000 on your local machine to port 5000 in the container. Once the container starts you should be able to access the application locally at `http://127.0.0.1:5000`. Here you will be meet with the following two pages:
 
 1. **Order List Page:** Navigate to the "Order List" page to view all existing orders. Use the pagination controls to navigate between pages.
 
