@@ -6,10 +6,10 @@ variable "resource_group_name" {
 
 variable "location" {
   description = "Specifies the location/region where the virtual network will be deployed"
-  type        = list(string)
+  type        = string
 }
 
 variable "vnet_address_space" {
   description = "Specifies the address space for the virtual network."
-  type        = string
+  type        = list(string)
 }
