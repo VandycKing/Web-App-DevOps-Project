@@ -18,7 +18,6 @@ resource "azurerm_subnet" "control_plane_subnet_rs" {
   resource_group_name  = azurerm_resource_group.networking_rg.name
   virtual_network_name = azurerm_virtual_network.aks_vnet_rs.name
   address_prefixes     = ["10.0.1.0/24"]
-
 }
 
 # Define subnets within the Vnet for the worker nodes
@@ -37,7 +36,7 @@ resource "azurerm_network_security_group" "aks_nsg_rs" {
 }
 
 # Allow inbound traffic to kube-apiserver (TCP/443) from your public IP address
-resource "azurerm_network_security_group_rule" "kube_apiserver_rs" {
+resource "azurerm_network_security_group_rule" "kube_apiserver_rule_rs" {
   name                        = "vd-kube-api-server-rule"
   priority                    = 1001
   direction                   = "Inbound"
