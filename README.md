@@ -61,6 +61,10 @@ This command starts a Docker container based on the previously built image, mapp
 
 - **Database:** The application employs an Azure SQL Database as its database system to store order-related data.
 
+- **Containerization:** Docker is employed to build and package all dependencies of the application into a docker image,and run the application in a container to make it consistency across different platforms.
+
+- **Networking:** Terraform is employed to provision networking services for AKS. This involved creating a networking module and creating a resource gorup, virtual network, subnets for the control plane and worker nodes, network security group (NSG) and NSG rules to allow inbound traffic for kube-apiserver and ssh.
+
 ## Contributors 
 
 - [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
