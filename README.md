@@ -65,6 +65,8 @@ This command starts a Docker container based on the previously built image, mapp
 
 - **Networking:** Terraform is employed to provision networking services for AKS. This involved creating a networking module and creating a resource gorup, virtual network, subnets for the control plane and worker nodes, network security group (NSG) and NSG rules to allow inbound traffic for kube-apiserver and ssh.
 
+- **AKS Cluster:** Employs terraform to provision the aks cluster, node pool and service principal for the aks cluster module.
+
 ## Contributors 
 
 - [Maya Iuga]([https://github.com/yourusername](https://github.com/maya-a-iuga))
