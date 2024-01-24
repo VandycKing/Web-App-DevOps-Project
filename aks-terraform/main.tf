@@ -15,3 +15,15 @@ provider "azurerm" {
   tenant_id       = var.tenant_id
 }
 
+
+module "networking" {
+  source = "./networking-module"
+
+  # Input variables for the networking module
+  resource_group_name = "networking-resource-group"
+  location            = "UK South"
+  vnet_address_space  = ["10.0.0.0/16"]
+
+  # Define more input variables as needed...
+}
+
