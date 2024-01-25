@@ -17,7 +17,7 @@ provider "azurerm" {
 
 
 module "networking" {
-  source = "git::https://github.com/VandycKing/Web-App-DevOps-Project/aks-terraform/networking-module?ref=main"
+  source = "./networking-module"
 
   # Input variables for the networking module
   resource_group_name = "networking-resource-group"
@@ -29,15 +29,15 @@ module "networking" {
 
 
 module "aks_cluster" {
-  source = "git::https://github.com/VandycKing/Web-App-DevOps-Project//aks-terraform/aks-cluster-module?ref=main"
+  source = "./aks-cluster-module"
 
   # Input variables for the AKS cluster module
-  aks_cluster_name                = "terraform-aks-cluster"
-  cluster_location                = "UK South"
-  dns_prefix                      = "myaks-project"
-  kubernetes_version              = "1.26.6" # Adjust the version as needed
-  service_principal_client_id     = var.client_id
-  service_principal_client_secret = var.client_secret
+  aks_cluster_name            = "terraform-aks-cluster"
+  cluster_location            = "UK South"
+  dns_prefix                  = "myaks-project"
+  kubernetes_version          = "1.26.6" # Adjust the version as needed
+  service_principal_client_id = var.client_id
+  service_principal_secret    = var.client_secret
 
   # Input variables referencing outputs from the networking module
   resource_group_name     = module.networking.resource_group_name
