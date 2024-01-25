@@ -36,7 +36,7 @@ resource "azurerm_network_security_group" "aks_nsg_rs" {
 }
 
 # Allow inbound traffic to kube-apiserver (TCP/443) from your public IP address
-resource "azurerm_network_security_group_rule" "kube_apiserver_rule_rs" {
+resource "azurerm_network_security_rule" "kube_apiserver_rule_rs" {
   name                        = "vd-kube-api-server-rule"
   priority                    = 1001
   direction                   = "Inbound"
@@ -51,7 +51,7 @@ resource "azurerm_network_security_group_rule" "kube_apiserver_rule_rs" {
 }
 
 # Allows inbound traffic for SSH (TCP/22)
-resource "azurerm_network_security_group_rule" "ssh_rule_rs" {
+resource "azurerm_network_security_rule" "example" {
   name                        = "vd-ssh-rule"
   priority                    = 1002
   direction                   = "Inbound"
