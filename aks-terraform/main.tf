@@ -17,7 +17,7 @@ provider "azurerm" {
 
 
 module "networking" {
-  source = "./networking-module"
+  source = "git::https://github.com/VandycKing/Web-App-DevOps-Project/aks-terraform/networking-module?ref=main"
 
   # Input variables for the networking module
   resource_group_name = "networking-resource-group"
@@ -27,8 +27,10 @@ module "networking" {
   # Define more input variables as needed...
 }
 
+
 module "aks_cluster" {
-  source = "./aks-cluster-module"
+  source = "git::https://github.com/VandycKing/Web-App-DevOps-Project//aks-terraform/aks-cluster-module?ref=main"
+
   # Input variables for the AKS cluster module
   aks_cluster_name                = "terraform-aks-cluster"
   cluster_location                = "UK South"
@@ -46,4 +48,3 @@ module "aks_cluster" {
 
   # Define more input variables as needed...
 }
-
