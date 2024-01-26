@@ -25,7 +25,7 @@ resource "azurerm_subnet" "worker_node_subnet_rs" {
   name                 = "vd-worker-node-subnet"
   resource_group_name  = azurerm_resource_group.networking_rg.name
   virtual_network_name = azurerm_virtual_network.aks_vnet_rs.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes     = ["10.0.2.0/24"]
 }
 
 # Define Network Security Group (NSG) for the AKS subnet

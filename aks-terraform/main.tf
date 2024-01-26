@@ -32,7 +32,7 @@ module "aks_cluster" {
   source = "./aks-cluster-module"
 
   # Input variables for the AKS cluster module
-  aks_cluster_name            = "terraform-aks-cluster"
+  aks_cluster_name            = "vd-terraform-aks-cluster"
   cluster_location            = "UK South"
   dns_prefix                  = "myaks-project"
   kubernetes_version          = "1.26.6" # Adjust the version as needed
