@@ -53,6 +53,39 @@ This command starts a Docker container based on the previously built image, mapp
 
 2. **Add New Order Page:** Click on the "Add New Order" tab to access the order form. Complete all required fields and ensure that your entries meet the specified criteria.
 
+### Azure Kubernetes Service (AKS) Deployment with Terraform
+
+This project leverages Terraform, an open-source infrastructure as code software tool, for deploying a scalable and secure Azure Kubernetes Service (AKS) cluster, along with the necessary networking infrastructure within Microsoft Azure. Embracing a modular approach, the project is organized for enhanced reusability and clarity, ensuring a smooth and efficient infrastructure provisioning process.
+
+#### Project Structure
+
+- `aks-terraform/`
+  - `main.tf`: This is the primary Terraform configuration file that orchestrates the integration of both the AKS and networking modules.
+  - `variables.tf`: A file that defines the input variables used across the Terraform configuration, enabling customization and flexibility.
+  - `staging.tfvars`, `dev.tfvars`, `prod.tfvars`, `default.tfvars`: These files contain environment-specific variables and secrets, allowing for distinct configurations for different deployment environments.
+  - `aks-cluster-module/`: This directory houses the Terraform module for the AKS cluster setup.
+    - `main.tf`: The main configuration file for the AKS module.
+    - `variables.tf`: Defines input variables specific to the AKS module.
+    - `outputs.tf`: Contains the output variables from the AKS module.
+  - `networking-module/`: Contains the Terraform module for setting up networking.
+    - `main.tf`: The main configuration file for the networking module.
+    - `variables.tf`: Defines input variables for the networking module.
+    - `outputs.tf`: Contains the output variables from the networking module, which are utilized in the AKS cluster module.
+- `.gitignore`: Prevents tracking of certain files (like Terraform state files) in Git.
+
+#### Project Initialization and Deployment
+
+After setting up the project structure, initialize the Terraform environment within the `networking-module`, `aks-cluster-module`, and `aks-terraform` directories by running:
+
+```bash
+terraform init
+```
+To deploy the AKS infrastructure to Azure, execute the following command, replacing staging.tfvars with the appropriate environment-specific variable file:
+
+```bash
+terraform apply -var-file="staging.tfvars"
+```
+
 ## Technology Stack
 
 - **Backend:** Flask is used to build the backend of the application, handling routing, data processing, and interactions with the database.
