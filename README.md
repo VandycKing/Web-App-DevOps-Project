@@ -86,6 +86,42 @@ To deploy the AKS infrastructure to Azure, execute the following command, replac
 terraform apply -var-file="staging.tfvars"
 ```
 
+### Deploying Flask App to AKS with Kubernetes
+
+To deploy the containerized Flask application to the provisioned AKS cluster, kubernetes manifest for deployment and service were prepared following the steps below:
+
+#### Deployment and Service Manifests
+
+##### Deployment Manifest
+
+`flask-app-deployment` is our deployment configuration, managing the application's lifecycle:
+
+- **Replicas**: Set to `2` for ensuring high availability.
+- **Labels**: Uses `app: flask-app` for easy identification of pods.
+- **Container Configuration**: Refers to our Flask app's Docker Hub image, exposing port `5000`.
+- **Deployment Strategy**: Employs Rolling Updates to reduce downtime.
+
+##### Service Manifest
+
+`flask-app-service` is our Kubernetes Service for internal cluster communications:
+
+- **Selector**: Matches the labels of pods from our Deployment.
+- **Ports**: Operates on TCP port `80`, with a targetPort of `5000` for the pods.
+- **Type**: Set as `ClusterIP`, indicating it's only accessible within the cluster.
+
+#### Deployment Strategy
+
+We use a Rolling Update strategy to ensure that there is minimal disruption to the service. This approach keeps at least one instance of the application running during updates.
+
+#### Testing and Validation
+
+After deployment, we validate the application through the following steps:
+
+1. **Checking Pod and Service Status**: Utilising `kubectl get pods` and `kubectl get services`.
+2. **Port Forwarding for Local Testing**: Using `kubectl port-forward <pod-name> 5000:5000`.
+3. **Application Functionality Testing**: Accessing `http://127.0.0.1:5000` to ensure features like the orders table and Add Order function work as expected.
+
+
 ## Technology Stack
 
 - **Backend:** Flask is used to build the backend of the application, handling routing, data processing, and interactions with the database.
