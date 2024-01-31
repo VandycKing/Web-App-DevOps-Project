@@ -22,6 +22,7 @@ steps:
 - task: Kubernetes@1
   inputs:
     connectionType: 'Azure Resource Manager'
+    azureSubscriptionEndpoint: 'Vandyck Adomako Mensah DevOps(2c8dc312-dea6-4470-8ad5-05e4b589b47d)'
     azureResourceGroup: 'networking-resource-group'
     kubernetesCluster: 'vd-aks-cluster'
     command: 'apply'
