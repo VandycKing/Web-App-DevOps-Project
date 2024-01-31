@@ -18,3 +18,13 @@ steps:
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
+
+- task: Kubernetes@1
+  inputs:
+    connectionType: 'Azure Resource Manager'
+    azureResourceGroup: 'networking-resource-group'
+    kubernetesCluster: 'vd-aks-cluster'
+    command: 'apply'
+    arguments: '-f aks-terraform/application-manifest.yaml'
+    secretType: 'dockerRegistry'
+    containerRegistryType: 'Azure Container Registry'
