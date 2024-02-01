@@ -162,10 +162,11 @@ This section outlines the setup and configuration of our Continuous Integration 
 #### Validation and Testing
 
 - Monitor the status of pods within the AKS cluster to confirm correct creation.
-- Initiate port forwarding using `kubectl` to access the application running on AKS locally using the comand below to test the operation and validate the effectiveness of the CI/CD pipeline.
+- Initiate port forwarding using `kubectl` to access the application running on AKS locally using the comand below.
 ```bash
 kubectl port-forward <podname> 5000:5000
 ```
+Access the application at `http://127.0.0.1:5000` to ensure features all features are functioning properly.
 
 ## Technology Stack
 
