@@ -121,6 +121,51 @@ After deployment, we validate the application through the following steps:
 2. **Port Forwarding for Local Testing**: Using `kubectl port-forward <pod-name> 5000:5000`.
 3. **Application Functionality Testing**: Accessing `http://127.0.0.1:5000` to ensure features like the orders table and Add Order function work as expected.
 
+### CI/CD Pipeline with Azure DevOps
+
+This section outlines the setup and configuration of our Continuous Integration and Continuous Deployment (CI/CD) pipeline. The pipeline automates the process of building, testing, and deploying our containerized application to Azure Kubernetes Service (AKS), integrating Azure DevOps with GitHub, Docker Hub, and AKS to streamline our deployment workflow.
+
+#### Pipeline Overview
+
+- **Source Control**: GitHub
+- **CI/CD Tool**: Azure DevOps
+- **Container Registry**: Docker Hub
+- **Deployment Target**: Azure Kubernetes Service (AKS)
+
+#### Azure DevOps Project Setup
+
+1. Create a new Azure DevOps project named `<Project Name>` within your Azure DevOps account.
+2. Configure GitHub as the source control system, selecting the `<GitHub Repository Name>` repository containing your application code.
+
+#### Pipeline Configuration
+
+##### Initial Setup
+
+- Initialize the pipeline using the Starter Pipeline template in Azure DevOps, laying the groundwork for further customization.
+
+##### Docker Hub Integration
+
+1. Generate a personal access token on Docker Hub.
+2. Configure an Azure DevOps service connection using this token to connect to Docker Hub.
+3. Verify the successful establishment of the connection.
+
+##### Building and Pushing Docker Images
+
+- Modify the pipeline to include a Docker task with the `buildAndPush` command, specifying the `<username>/<Docker Image Name>` of your application.
+- Set up the pipeline to trigger automatically upon any push to the main branch of your GitHub repository.
+
+##### AKS Integration
+
+1. Create and configure an AKS service connection in Azure DevOps, facilitating secure communication with your AKS cluster.
+2. Modify the pipeline to incorporate the "Deploy to Kubernetes" task, using the `kubectl` command and leveraging our deployment manifest for automated application deployment to AKS.
+
+#### Validation and Testing
+
+- Monitor the status of pods within the AKS cluster to confirm correct creation.
+- Initiate port forwarding using `kubectl` to access the application running on AKS locally using the comand below to test the operation and validate the effectiveness of the CI/CD pipeline.
+```bash
+kubectl port-forward <podname> 5000:5000
+```
 
 ## Technology Stack
 
