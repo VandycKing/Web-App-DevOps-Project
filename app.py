@@ -3,6 +3,8 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
+from azure.identity import ManagedIdentityCredential
+from azure.keyvault.secrets import SecretClient
 import pyodbc
 import os
 
