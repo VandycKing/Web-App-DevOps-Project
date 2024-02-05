@@ -261,7 +261,7 @@ This ensures the Docker image is equipped with all dependencies required for the
 
 Test the application locally using
 ```bash
-docker run --name <container-name> -p 5000:5000 vandycking/my-flask-img:latest
+docker run --name <container-name> -p 5000:5000 <docker username>/my-flask-img:latest
 ```
 to confirm seamless integration with Azure Key Vault, ensuring secure retrieval of secrets.
 
@@ -270,7 +270,7 @@ to confirm seamless integration with Azure Key Vault, ensuring secure retrieval 
 Following successful local tests, the application was deployed to the AKS cluster via the Azure DevOps CI/CD pipeline. 
 The application was then tested again via port forwarding using code below to ensure that all features are working properly
 ```bash
-kubectl port-forward flask-app-deployment-5879b4cd5f-smkbn 5000:5000
+kubectl port-forward <pod-name> 5000:5000
 ```
 
 
