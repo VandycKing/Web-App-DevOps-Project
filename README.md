@@ -168,6 +168,109 @@ kubectl port-forward <podname> 5000:5000
 ```
 Access the application at `http://127.0.0.1:5000` to ensure features all features are functioning properly.
 
+### Secure Application Integration with Azure Key Vault and AKS
+
+This section outlines the setup process, steps taken to secure application secrets with Azure Key Vault and Azure integration with AKS.
+
+#### Azure Key Vault Setup
+
+Azure Key Vault was created in Azure portal setting the region to "UK South" as our application and leaving all other settings unchanged.
+
+##### Permissions
+
+Assign the permission below to your Microsoft Entra user account:
+
+- **Key Vault Administrator**: This role was assigned to enable full management capabilities over the Key Vault secrets.
+
+##### Stored Secrets
+
+The Key Vault holds four critical secrets for the application's backend database connection:
+
+- **Server Name**: The hostname of the database server.
+- **Server Username**: The login username for the database.
+- **Server Password**: The login password for the database.
+- **Database Name**: The specific database to connect to.
+
+These secrets are utilized instead of hardcoded values in the application code to enhance security.
+
+#### AKS Integration with Key Vault
+
+##### Managed Identity for AKS
+
+Enable managed identity for your AKS cluster, allowing secure, credential-less authentication to Azure Key Vault using code below:
+```bash
+az aks update --resource-group <resource-group> --name <aks-cluster-name> --enable-managed-identity
+```
+Extract client id for integration with Azure Key Vault from the AKS managed identity with code below:
+```bash
+az aks show --resource-group <resource-group> --name <aks-cluster-name> --query identityProfile
+```
+
+##### Permissions to Managed Identity
+
+Grant **Key Vault Secrets Officer** role to the AKS managed identity empowering it to fetch and manage secrets as needed using code below:
+```bash
+az role assignment create --role "Key Vault Secrets Officer" \
+  --assignee <managed-identity-client-id> \
+  --scope /subscriptions/{subscription-id}/resourceGroups/{resource-group}/providers/Microsoft.KeyVault/vaults/{key-vault-name}
+```
+
+#### Application Code Modifications
+
+Integration of Azure Identity and Azure Key Vault libraries into the application code as below:
+```python
+from azure.identity import ManagedIdentityCredential
+from azure.keyvault.secrets import SecretClient
+```
+And modify application code to securely retrieve secrets using code below. Ensure that string names correspond to those used in storing secrets in Azure Key Vaults:
+```python
+# Set keyvault url
+key_vault_url = "https://<azure-key-vault-name>.vault.azure.net/"
+
+# Set up Azure Key Vault client with Managed Identity
+credential = ManagedIdentityCredential()
+secret_client = SecretClient(vault_url=key_vault_url, credential=credential)
+
+# Access the secret values from Key Vault
+server_name = secret_client.get_secret("Server-Name").value
+server_username = secret_client.get_secret("Server-Username").value
+server_password = secret_client.get_secret("Server-Password").value
+database_name = secret_client.get_secret("Database-Name").value
+
+# database connection 
+server = server_name
+database = database_name
+username = server_username
+password = server_password
+driver= '{ODBC Driver 18 for SQL Server}'
+```
+
+##### Docker Image Requirements Update
+
+The `requirements.txt` file was updated to include the following libraries:
+
+- azure-identity
+- azure-keyvault-secrets
+
+This ensures the Docker image is equipped with all dependencies required for the updated application code.
+
+#### Testing and Deployment
+
+##### Local Testing
+
+Test the application locally using
+```bash
+docker run --name <container-name> -p 5000:5000 <docker username>/my-flask-img:latest
+```
+to confirm seamless integration with Azure Key Vault, ensuring secure retrieval of secrets.
+
+##### Deployment to AKS
+
+Following successful local tests, the application was deployed to the AKS cluster via the Azure DevOps CI/CD pipeline. 
+The application was then tested again via port forwarding using code below to ensure that all features are working properly
+```bash
+kubectl port-forward <pod-name> 5000:5000
+```
 
 ## Technology Stack
 
